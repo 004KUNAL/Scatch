@@ -1,0 +1,4 @@
+{
+    "MONGODB_URI": "mongodb+srv://thakurkunalsingh7683_db_user:cXNJIyZhUQREwkjF@cluster0.dsrwrhk.mongodb.net/scatch?appName=Cluster0",
+    "JWT_SECRET": "development_secret"
+}
