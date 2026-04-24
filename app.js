@@ -30,17 +30,13 @@ app.use('/orders', ordersRouter);
 // Serve static files from React frontend and public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// PRODUCTION: Serve React frontend
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'frontend/dist')));
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'));
+// Basic health check
+app.get('/', (req, res) => {
+    res.json({ 
+        message: 'Scatch API is running 🚀',
+        environment: process.env.NODE_ENV || 'development'
     });
-} else {
-    app.get('/', (req, res) => {
-        res.json({ message: 'Scatch API is running in Development 🚀' });
-    });
-}
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
