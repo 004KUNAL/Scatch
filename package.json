@@ -4,10 +4,11 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "set NODE_ENV=development&& set DEBUG=development:* && node --watch app.js",
-    "prod": "set NODE_ENV=production&& node app.js",
-    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
+    "dev": "nodemon app.js",
     "start": "node app.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "keywords": [],
   "author": "",
