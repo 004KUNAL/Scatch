@@ -49,7 +49,7 @@ export default function Cart() {
 
       await api.post('/orders/create', orderData);
       setStep('success');
-      fetchCart(); // This will clear the cart in context
+      fetchCart();
       toast.success('Order placed successfully!');
     } catch (err) {
       console.error('Checkout error:', err);

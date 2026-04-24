@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { ShoppingCart, Search, SlidersHorizontal } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+const ALL = 'All';
+
 export default function Shop() {
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [search, setSearch] = useState('');
+  const [activeCategory, setActiveCategory] = useState(ALL);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
   const { user, role } = useAuth();
@@ -18,14 +21,24 @@ export default function Shop() {
     api.get('/products').then(res => {
       setProducts(res.data);
       setFiltered(res.data);
+      // Build unique category list
+      const cats = [ALL, ...new Set(res.data.map(p => p.category).filter(Boolean))];
+      setCategories(cats);
       setLoading(false);
     }).catch(() => setLoading(false));
   }, []);
 
   useEffect(() => {
     const q = search.toLowerCase();
-    setFiltered(products.filter(p => p.name?.toLowerCase().includes(q)));
-  }, [search, products]);
+    let result = products;
+    if (activeCategory !== ALL) {
+      result = result.filter(p => p.category === activeCategory);
+    }
+    if (q) {
+      result = result.filter(p => p.name?.toLowerCase().includes(q));
+    }
+    setFiltered(result);
+  }, [search, activeCategory, products]);
 
   const handleAddToCart = async (productId) => {
     if (!user) return toast.error('Please login to add items to cart');
@@ -54,12 +67,39 @@ export default function Shop() {
         </div>
       </div>
 
+      {/* Category Filter Pills */}
+      {categories.length > 1 && (
+        <div className="category-filter-bar">
+          {categories.map(cat => (
+            <button
+              key={cat}
+              className={`cat-pill ${activeCategory === cat ? 'active' : ''}`}
+              onClick={() => setActiveCategory(cat)}
+            >
+              {cat === ALL ? '🛍️ All' : cat}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Results count */}
+      {!loading && (
+        <p className="results-count">
+          {filtered.length} product{filtered.length !== 1 ? 's' : ''} found
+          {activeCategory !== ALL && <> in <strong>{activeCategory}</strong></>}
+          {search && <> for "<strong>{search}</strong>"</>}
+        </p>
+      )}
+
       {loading ? (
         <div className="loading-screen"><div className="spinner"></div></div>
       ) : filtered.length === 0 ? (
         <div className="empty-state">
           <SlidersHorizontal size={48} />
           <p>No products found</p>
+          <button className="cat-pill active" style={{ marginTop: '1rem' }} onClick={() => { setSearch(''); setActiveCategory(ALL); }}>
+            Clear Filters
+          </button>
         </div>
       ) : (
         <div className="shop-grid">
@@ -75,12 +115,15 @@ export default function Shop() {
                   {product.image ? (
                     <img src={product.image} alt={product.name} className="product-image" />
                   ) : (
-                    <div className="product-placeholder">
-                      <span>✦</span>
-                    </div>
+                    <div className="product-placeholder"><span>✦</span></div>
                   )}
                   {product.discount > 0 && (
                     <span className="discount-badge">-{product.discount}%</span>
+                  )}
+                  {product.category && (
+                    <span className="category-tag" onClick={() => setActiveCategory(product.category)}>
+                      {product.category}
+                    </span>
                   )}
                 </div>
                 <div className="product-info">

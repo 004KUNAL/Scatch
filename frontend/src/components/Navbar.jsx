@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
-import { ShoppingCart, User, LogOut, Shield, Menu, X } from 'lucide-react';
+import { ShoppingCart, LogOut, Shield, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 

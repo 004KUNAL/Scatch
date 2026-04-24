@@ -22,7 +22,6 @@ export default function Home() {
 
     window.addEventListener('mousemove', moveCursor);
 
-    // Magnetic effect for elements with "magnetic" class
     const magneticElements = document.querySelectorAll('.btn-primary, .btn-secondary, .category-card');
     
     const applyMagnetic = (e) => {
@@ -30,7 +29,6 @@ export default function Home() {
       const { left, top, width, height } = el.getBoundingClientRect();
       const x = e.clientX - (left + width / 2);
       const y = e.clientY - (top + height / 2);
-      
       el.style.transform = `translate3d(${x * 0.3}px, ${y * 0.3}px, 0)`;
       if (outlineRef.current) {
         outlineRef.current.style.width = `${width + 20}px`;

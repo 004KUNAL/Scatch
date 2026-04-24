@@ -777,6 +777,76 @@ img {
 }
 
 /* ================================
+   CATEGORY FILTER BAR
+   ================================ */
+.category-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    padding: 0 7% 1.5rem;
+    justify-content: center;
+}
+
+.cat-pill {
+    padding: 0.45rem 1.1rem;
+    border-radius: 50px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    background: var(--glass);
+    color: var(--text-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(8px);
+}
+
+.cat-pill:hover {
+    border-color: var(--border-glow);
+    color: var(--text);
+    background: rgba(99, 102, 241, 0.08);
+}
+
+.cat-pill.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+}
+
+.results-count {
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    padding: 0 7% 1.5rem;
+}
+
+.results-count strong {
+    color: var(--primary);
+}
+
+/* Category tag on product card */
+.category-tag {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.55);
+    color: rgba(255,255,255,0.85);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 50px;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: background 0.2s;
+    letter-spacing: 0.3px;
+}
+
+.category-tag:hover {
+    background: rgba(99, 102, 241, 0.7);
+    color: white;
+}
+
+/* ================================
    AUTH PAGES
    ================================ */
 .auth-page {

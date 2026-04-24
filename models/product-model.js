@@ -8,6 +8,10 @@ const productSchema = mongoose.Schema({
         type : Number,
         default : 0
     },
+    category : {
+        type : String,
+        default : 'Other'
+    },
     bgc : String,
     panelcolor : String,
     textcolor : String,

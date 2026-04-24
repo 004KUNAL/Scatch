@@ -28,6 +28,7 @@ router.post('/create', isLoggedIn, async (req, res) => {
 
         res.status(201).json({ message: 'Order placed successfully', order });
     } catch (err) {
+        console.error("Order Creation Error:", err);
         res.status(500).json({ message: err.message });
     }
 });
